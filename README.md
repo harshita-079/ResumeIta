@@ -1,4 +1,4 @@
-# ResumeIQ
+# ResumeIta
 
 AI-powered Resume Builder and ATS Analyzer built using React, Tailwind CSS, and modern frontend technologies.
 
