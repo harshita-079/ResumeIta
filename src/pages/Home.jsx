@@ -5,6 +5,7 @@ import Footer from '../components/home/Footer'
 import Banner from '../components/home/Banner'
 import Navbar from '../components/home/Navbar'
 import Features from '../components/home/Features'
+import Templates from '../components/home/Templates'
 
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
       <Hero/>
       <Features/>
       <Testimonials/>
+      <Templates/>
       <Footer/>
     </div>
   )

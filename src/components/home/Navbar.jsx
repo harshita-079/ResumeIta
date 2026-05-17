@@ -12,7 +12,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link
           to="/"
-          className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent"
+          className="text-2xl font-bold bg-linear-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent"
         >
           ResumeIta
         </Link>
@@ -43,7 +43,7 @@ const Navbar = () => {
 
           </button>
 
-          <button className="px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:opacity-90 transition-all">
+          <button className="px-5 py-2 rounded-xl bg-linear-to-r from-indigo-500 to-purple-500 text-white hover:opacity-90 transition-all">
 
             Sign Up
 

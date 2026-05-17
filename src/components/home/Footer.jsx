@@ -9,7 +9,7 @@ const Footer = () => {
 
               <div>
                 {/* Logo */}
-                <h2 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+                <h2 className="text-2xl font-bold bg-linear-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
 
                   ResumeIta
 
@@ -36,7 +36,7 @@ const Footer = () => {
             {/* Copyright */}
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 pt-8">
               <p className="flex items-center gap-2 text-sm text-slate-500">
-              Made with <Heart size={16} className="text-red-500 fill-red-500 "/> by <span className="bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent font-medium">Harshita Gupta</span>
+              Made with <Heart size={16} className="text-red-500 fill-red-500 "/> by <span className="bg-linear-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent font-medium">Harshita Gupta</span>
             </p>
             </div>
             

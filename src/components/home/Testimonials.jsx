@@ -50,7 +50,7 @@ const Testimonials = () => {
 
               What users say about{" "}
 
-              <span className="bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
 
                 ResumeIta
 
@@ -119,7 +119,7 @@ const Testimonials = () => {
               <div className="flex items-center gap-4">
 
                 {/* Avatar */}
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center font-semibold text-lg">
+                <div className="w-12 h-12 rounded-full bg-linear-to-r from-indigo-500 to-purple-500 flex items-center justify-center font-semibold text-lg">
 
                   {item.name.charAt(0)}
 
