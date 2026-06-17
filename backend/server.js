@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
 import resumeRoutes from "./routes/resumeRoutes.js"
+import feedbackRoutes from "./routes/feedbackRoutes.js"
 
 dotenv.config();
 
@@ -24,6 +25,8 @@ connectDB();
 app.use("/api/auth",authRoutes);
 app.use("/api/user",userRoutes);
 app.use("/api/resume",resumeRoutes);
+app.use("/api/feedback",feedbackRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

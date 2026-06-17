@@ -7,6 +7,8 @@ const Login = () => {
 
     const query = new URLSearchParams(window.location.search)
 
+    const redirect=query.get("redirect");
+
     const urlState=query.get('state')
 
     const [state, setState] = React.useState(urlState ||"login")
@@ -76,7 +78,11 @@ const Login = () => {
 
             alert(`Welcome ${user.name}`);
 
-            navigate("/app");
+            if(redirect==="feedback"){
+                navigate('/feedback')
+            } else {
+                navigate("/app");
+            }
         }
 
     } catch (error) {

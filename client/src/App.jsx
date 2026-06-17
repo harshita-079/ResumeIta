@@ -1,4 +1,4 @@
-import React from 'react'
+
 import {Route,Routes} from 'react-router-dom'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
@@ -9,10 +9,13 @@ import Preview from './pages/preview'
 import Profile from './pages/Profile'
 import Setting from './pages/Setting'
 import ProtectedRoute from './routes/ProtectedRoute'
+import {Toaster} from 'react-hot-toast'
+import Feedback from './pages/Feedback'
 
 const App = () => {
   return (
     <>
+      <Toaster />
       <Routes>
         <Route path='/' element={<Home />}/>
         
@@ -30,6 +33,7 @@ const App = () => {
         </Route>
         <Route path='view/:resumeId' element={<Preview/>}/>
         <Route path='login' element={<Login />}/>
+        <Route path='feedback' element={<Feedback />}/>
         {/* <Route path='signup' element={<Signup />}/> */}
       </Routes>
     </>

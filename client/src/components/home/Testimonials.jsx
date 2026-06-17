@@ -1,4 +1,5 @@
 import React from "react";
+import toast from "react-hot-toast";
 import {useNavigate} from 'react-router-dom'
 const Testimonials = () => {
   const testimonials = [
@@ -30,13 +31,14 @@ const Testimonials = () => {
   const navigate=useNavigate();
 
   const handleFeedback=()=>{
-    const currentUser=JSON.parse(localStorage.getItem("currentUser"))
+    const token=localStorage.getItem("token")
 
-    if(currentUser){
+    if(token){
       navigate('/feedback')
     }
     else{
-      navigate('/login')
+      toast.error("Please Login to give feedback")
+      navigate('/login?redirect=feedback')
     }
   }
 
