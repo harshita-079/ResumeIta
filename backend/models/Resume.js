@@ -24,7 +24,7 @@ const resumeSchema = new mongoose.Schema({
     },
 
     data: {
-        type: Object,
+        type: Object, 
         default: {}
     }
 

@@ -1,21 +1,15 @@
 import React from 'react'
 import api from '../../api/axios'
+import PersonalInfo from './sections/PersonalInfo'
+import ProfessionalSummary from './sections/ProfessionalSummary'
+import Skills from './sections/Skills'
+import Experience from './sections/Experience'
+import Education from './sections/Education'
+import Projects from './sections/Projects'
 
 const ResumeForm = ({ resumeData, setResumeData }) => {
 
-  const handleChange = (e) => {
-
-    const { name, value } = e.target
-
-    setResumeData((prev) => ({
-      ...prev,
-
-      personal_info: {
-        ...prev.personal_info,
-        [name]: value,
-      },
-    }))
-  }
+  
 
   const handleSaveResume=async ()=>{
     console.log(resumeData);
@@ -24,13 +18,34 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
 
       //existing resume
       if(resumeData._id){
-        await api.put(`/resume/${resumeData._id}`,
-          resumeData,{
-            headers:{
-              Authorization:`Bearer ${token}`
-            }
-          }
-        )
+        await api.put(
+  `/resume/${resumeData._id}`,
+  {
+    title:
+      resumeData.personal_info.full_name || "Untitled Resume",
+
+    template:
+      resumeData.template || "Modern Pro",
+
+    accentColor:
+      resumeData.accentColor || "#6366f1",
+
+    data: {
+      personal_info: resumeData.personal_info,
+      professional_summary: resumeData.professional_summary,
+      skills: resumeData.skills,
+      experience: resumeData.experience,
+      education: resumeData.education,
+      projects: resumeData.projects,
+      accent_color: resumeData.accent_color
+    }
+  },
+  {
+    headers:{
+      Authorization:`Bearer ${token}`
+    }
+  }
+)
 
         alert("Resume Updated Successfully")
       }
@@ -95,124 +110,38 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
       {/* Form */}
       <div className="space-y-8">
 
-        {/* Personal Info */}
-        <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
+        <PersonalInfo
+          resumeData={resumeData}
+          setResumeData={setResumeData}
+        />
 
-          <h2 className="text-2xl font-semibold mb-6">
+        <ProfessionalSummary
+          resumeData={resumeData}
+          setResumeData={setResumeData}
+        />  
 
-            Personal Information
+        <Skills
+          resumeData={resumeData}
+          setResumeData={setResumeData}
+        />
 
-          </h2>
+        <Experience
+          resumeData={resumeData}
+          setResumeData={setResumeData}
+        />
 
-          <div className="grid sm:grid-cols-2 gap-5">
-
-            {/* Full Name */}
-            <div>
-
-              <label className="text-sm text-slate-400 block mb-3">
-
-                Full Name
-
-              </label>
-
-              <input
-                type="text"
-                name="full_name"
-                value={resumeData.personal_info.full_name}
-                onChange={handleChange}
-                placeholder="Enter full name"
-                className="w-full h-12 rounded-2xl bg-slate-900 border border-white/10 px-4 outline-none focus:border-indigo-500 transition"
-              />
-
-            </div>
-
-            {/* Profession */}
-            <div>
-
-              <label className="text-sm text-slate-400 block mb-3">
-
-                Profession
-
-              </label>
-
-              <input
-                type="text"
-                name="profession"
-                value={resumeData.personal_info.profession}
-                onChange={handleChange}
-                placeholder="Frontend Developer"
-                className="w-full h-12 rounded-2xl bg-slate-900 border border-white/10 px-4 outline-none focus:border-indigo-500 transition"
-              />
-
-            </div>
-
-            {/* Email */}
-            <div>
-
-              <label className="text-sm text-slate-400 block mb-3">
-
-                Email
-
-              </label>
-
-              <input
-                type="email"
-                name="email"
-                value={resumeData.personal_info.email}
-                onChange={handleChange}
-                placeholder="Enter email"
-                className="w-full h-12 rounded-2xl bg-slate-900 border border-white/10 px-4 outline-none focus:border-indigo-500 transition"
-              />
-
-            </div>
-
-            {/* Phone */}
-            <div>
-
-              <label className="text-sm text-slate-400 block mb-3">
-
-                Phone
-
-              </label>
-
-              <input
-                type="text"
-                name="phone"
-                value={resumeData.personal_info.phone}
-                onChange={handleChange}
-                placeholder="+91 9876543210"
-                className="w-full h-12 rounded-2xl bg-slate-900 border border-white/10 px-4 outline-none focus:border-indigo-500 transition"
-              />
-
-            </div>
-
-            {/* Location */}
-            <div className="sm:col-span-2">
-
-              <label className="text-sm text-slate-400 block mb-3">
-
-                Location
-
-              </label>
-
-              <input
-                type="text"
-                name="location"
-                value={resumeData.personal_info.location}
-                onChange={handleChange}
-                placeholder="Delhi, India"
-                className="w-full h-12 rounded-2xl bg-slate-900 border border-white/10 px-4 outline-none focus:border-indigo-500 transition"
-              />
-
-            </div>
-
-          </div>
-
-        </div>
+        <Education
+          resumeData={resumeData}
+          setResumeData={setResumeData}
+        />
+        <Projects
+          resumeData={resumeData}
+          setResumeData={setResumeData}
+        />
 
       </div>
 
-
+      
       <button
         onClick={handleSaveResume}
         className="px-6 py-3 rounded-2xl bg-linear-to-r from-indigo-500 to-purple-500 hover:opacity-90 transition mt-4"
@@ -220,6 +149,7 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
         Save Resume
       </button>
     </div>
+    
   )
 }
 

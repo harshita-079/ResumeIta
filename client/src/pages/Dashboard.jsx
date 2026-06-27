@@ -43,6 +43,30 @@ const Dashboard = () => {
 
   };
 
+  const handleDeleteResume = async (resumeId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this resume? This action cannot be undone."
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const token=localStorage.getItem("token");
+      await api.delete(`/resume/${resumeId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setAllResume(prev=>
+        prev.filter(resume => resume._id !== resumeId)
+      );
+
+      alert("Resume deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting resume:", error);
+      alert("Failed to delete resume. Please try again.");
+    }
+  };
+
   useEffect(() => {
     loadResume()
     loadCurrentUser()
@@ -313,7 +337,7 @@ const Dashboard = () => {
                   {/* Summary */}
                   <p className="text-slate-400 text-sm leading-6 line-clamp-3 mb-5">
 
-                    "No summary available"
+                    {resume.data?.professional_summary || "No summary available."}
 
                   </p>
 
@@ -326,7 +350,7 @@ const Dashboard = () => {
 
                     </h4>
 
-                    {(resume.experience || []).slice(0, 1).map((exp) => (
+                  {resume.data?.experience?.slice(0, 1).map((exp) => (
 
                       <div
                         key={exp._id}
@@ -354,7 +378,7 @@ const Dashboard = () => {
                   {/* Skills */}
                   <div className="flex flex-wrap gap-2 mb-6">
 
-                    {(resume.skills || []).slice(0, 4).map((skill, index) => (
+                    {resume.data?.skills?.slice(0, 4).map((skill, index) => (
 
                       <span
                         key={index}
@@ -385,6 +409,11 @@ const Dashboard = () => {
                         Edit
 
                       </button>
+
+                      <button
+                        onClick={() => handleDeleteResume(resume._id)}className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 transition">
+                        Delete
+                       </button>
 
                       <button
                         className="px-5 py-2 rounded-xl text-white transition"

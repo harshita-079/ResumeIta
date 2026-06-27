@@ -79,23 +79,25 @@ export const getAllResumes = async (req, res) => {
 };
 
 export const updateResume = async (req, res) => {
-
+    console.log("req body");
+    console.log(req.body);
     try {
 
         const resume = await Resume.findOneAndUpdate(
-
-            {
-                _id: req.params.id,
-                userId: req.user.id
-            },
-
-            req.body,
-
-            {
-                new: true
-            }
-
-        );
+  {
+    _id: req.params.id,
+    userId: req.user.id
+  },
+  {
+    title: req.body.title,
+    template: req.body.template,
+    accentColor: req.body.accentColor,
+    data: req.body.data
+  },
+  {
+    returnDocument: "after"
+  }
+);
 
         if (!resume) {
 
@@ -161,6 +163,54 @@ export const getResumeById = async (req, res) => {
             success: true,
 
             resume
+
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+
+            success: false,
+
+            message: "Server Error"
+
+        });
+
+    }
+
+};
+
+export const deleteResume = async (req, res) => {
+
+    try {
+
+        const resume = await Resume.findOneAndDelete({
+
+            _id: req.params.id,
+
+            userId: req.user.id
+
+        });
+
+        if (!resume) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message: "Resume not found"
+
+            });
+
+        }
+
+        res.status(200).json({
+
+            success: true,
+
+            message: "Resume Deleted Successfully"
 
         });
 
