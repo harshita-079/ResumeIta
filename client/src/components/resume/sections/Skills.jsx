@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const Skills = ({ resumeData, setResumeData }) => {
 
@@ -46,17 +46,18 @@ const Skills = ({ resumeData, setResumeData }) => {
           placeholder="React, Node.js, MongoDB..."
           value={skillInput}
           onChange={(e) => setSkillInput(e.target.value)}
-          className="flex-1 h-12 rounded-2xl bg-slate-900 border border-white/10 px-4 outline-none focus:border-indigo-500"
-        />
-
-        <button
-          onClick={addSkill}
           onKeyDown={(e)=>{
             if(e.key==="Enter") {
               e.preventDefault();
               addSkill();
             }
           }}
+          className="flex-1 h-12 rounded-2xl bg-slate-900 border border-white/10 px-4 outline-none focus:border-indigo-500"
+        />
+
+        <button
+          type="button"
+          onClick={addSkill}
           className="px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-700 transition"
         >
           Add

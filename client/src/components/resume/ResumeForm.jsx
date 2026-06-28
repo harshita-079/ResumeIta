@@ -1,4 +1,3 @@
-import React from 'react'
 import api from '../../api/axios'
 import PersonalInfo from './sections/PersonalInfo'
 import ProfessionalSummary from './sections/ProfessionalSummary'
@@ -6,13 +5,12 @@ import Skills from './sections/Skills'
 import Experience from './sections/Experience'
 import Education from './sections/Education'
 import Projects from './sections/Projects'
+import {useNavigate} from 'react-router-dom'
 
 const ResumeForm = ({ resumeData, setResumeData }) => {
-
-  
+  const navigate=useNavigate()
 
   const handleSaveResume=async ()=>{
-    console.log(resumeData);
     try {
       const token=localStorage.getItem("token")
 
@@ -84,6 +82,7 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
 
       alert("Failed to save resume")
     }
+    navigate("/app")
   }
 
   return (
@@ -120,6 +119,11 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
           setResumeData={setResumeData}
         />  
 
+        <Education
+          resumeData={resumeData}
+          setResumeData={setResumeData}
+        />
+
         <Skills
           resumeData={resumeData}
           setResumeData={setResumeData}
@@ -129,15 +133,11 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
           resumeData={resumeData}
           setResumeData={setResumeData}
         />
-
-        <Education
-          resumeData={resumeData}
-          setResumeData={setResumeData}
-        />
         <Projects
           resumeData={resumeData}
           setResumeData={setResumeData}
         />
+        
 
       </div>
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 const PersonalInfo = ({ resumeData, setResumeData }) => {
 
   const handleChange = (e) => {
