@@ -27,7 +27,7 @@ const PersonalInfo = ({ resumeData, setResumeData }) => {
         <div>
 
           <label className="text-sm text-slate-400 block mb-3">
-            Full Name
+            Full Name*
           </label>
 
           <input
@@ -45,7 +45,7 @@ const PersonalInfo = ({ resumeData, setResumeData }) => {
         <div>
 
           <label className="text-sm text-slate-400 block mb-3">
-            Profession
+            Profession*
           </label>
 
           <input
@@ -63,7 +63,7 @@ const PersonalInfo = ({ resumeData, setResumeData }) => {
         <div>
 
           <label className="text-sm text-slate-400 block mb-3">
-            Email
+            Email*
           </label>
 
           <input

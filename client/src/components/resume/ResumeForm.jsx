@@ -6,19 +6,26 @@ import Experience from './sections/Experience'
 import Education from './sections/Education'
 import Projects from './sections/Projects'
 import {useNavigate} from 'react-router-dom'
+import { TemplateSelector } from './TemplateSelector'
 
 const ResumeForm = ({ resumeData, setResumeData }) => {
-  const navigate=useNavigate()
+  const navigate=useNavigate();
 
   const handleSaveResume=async ()=>{
+    const fullName=resumeData.personal_info.full_name.trim();
+    const email=resumeData.personal_info.email.trim();
+    const profession=resumeData.personal_info.profession.trim();
+
+    if(!fullName || !email || !profession){
+      return alert("Please fill all required fields");
+    }
     try {
       const token=localStorage.getItem("token")
 
       //existing resume
       if(resumeData._id){
-        await api.put(
-  `/resume/${resumeData._id}`,
-  {
+        await api.put(`/resume/${resumeData._id}`,
+      {
     title:
       resumeData.personal_info.full_name || "Untitled Resume",
 
@@ -35,7 +42,7 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
       experience: resumeData.experience,
       education: resumeData.education,
       projects: resumeData.projects,
-      accent_color: resumeData.accent_color
+      accentColor: resumeData.accentColor
     }
   },
   {
@@ -108,6 +115,10 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
 
       {/* Form */}
       <div className="space-y-8">
+        <TemplateSelector
+          resumeData={resumeData}
+          setResumeData={setResumeData}
+        />
 
         <PersonalInfo
           resumeData={resumeData}

@@ -18,6 +18,8 @@ const Dashboard = () => {
 
   const  [currentUser,setCurrentUser]=useState(null);
 
+  const totalTemplates=new Set(allResume.map(r=>r.template)).size;
+
   const loadCurrentUser=()=>{
     const user=JSON.parse(localStorage.getItem("currentUser"))
 
@@ -167,7 +169,7 @@ const Dashboard = () => {
 
               <h2 className="text-4xl font-bold mb-2">
 
-                89%
+                coming soon
 
               </h2>
 
@@ -196,7 +198,7 @@ const Dashboard = () => {
 
               <h2 className="text-4xl font-bold mb-2">
 
-                03
+                {totalTemplates}
 
               </h2>
 
@@ -225,7 +227,7 @@ const Dashboard = () => {
 
               <h2 className="text-4xl font-bold mb-2">
 
-                12
+                0
 
               </h2>
 
@@ -300,10 +302,10 @@ const Dashboard = () => {
                       {/* Avatar */}
                       <div
                         className="w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold text-white"
-                        style={{ backgroundColor: resume.accent_color }}
+                        style={{ backgroundColor: resume.accentColor }}
                       >
 
-                        {resume.title.charAt(0)}
+                        {resume.data.personal_info.full_name?.charAt(0)?.toUpperCase() || resume.title.charAt(0).toUpperCase()}
 
                       </div>
 
@@ -311,13 +313,13 @@ const Dashboard = () => {
 
                         <h3 className="text-xl font-semibold">
 
-                          {resume.title}
+                          {resume.data?.personal_info?.full_name || resume.title}
 
                         </h3>
 
                         <p className="text-slate-400 text-sm mt-1">
 
-                          "Resume"
+                          {resume.data?.personal_info?.profession || "Resume"}
 
                         </p>
 
@@ -335,7 +337,7 @@ const Dashboard = () => {
                   </div>
 
                   {/* Summary */}
-                  <p className="text-slate-400 text-sm leading-6 line-clamp-3 mb-5">
+                  <p className="text-slate-400 text-sm leading-6 line-clamp-2 mb-5">
 
                     {resume.data?.professional_summary || "No summary available."}
 
@@ -350,7 +352,8 @@ const Dashboard = () => {
 
                     </h4>
 
-                  {resume.data?.experience?.slice(0, 1).map((exp) => (
+                  {resume.data?.experience?.length>0 ? (
+                    resume.data.experience.slice(0, 1).map((exp) => (
 
                       <div
                         key={exp._id}
@@ -370,15 +373,18 @@ const Dashboard = () => {
                         </p>
 
                       </div>
-
-                    ))}
+                    ))) : (
+                      <p className="text-xs text-slate-500">No experience added yet.</p>
+                    
+                    )}
 
                   </div>
 
                   {/* Skills */}
                   <div className="flex flex-wrap gap-2 mb-6">
 
-                    {resume.data?.skills?.slice(0, 4).map((skill, index) => (
+                    {resume.data?.skills?.length > 0 ? (
+                      resume.data.skills.slice(0, 4).map((skill, index) => (
 
                       <span
                         key={index}
@@ -389,7 +395,9 @@ const Dashboard = () => {
 
                       </span>
 
-                    ))}
+                    ))) : (
+                      <span className="text-xs text-slate-500">No skills added yet.</span>
+                    )}
 
                   </div>
 
@@ -398,7 +406,11 @@ const Dashboard = () => {
 
                     <p className="text-slate-500 text-sm">
 
-                      Updated recently
+                      Updated {new Date(resume.updatedAt).toLocaleDateString("en-IN", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
 
                     </p>
 
