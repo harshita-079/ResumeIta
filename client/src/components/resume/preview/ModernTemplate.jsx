@@ -13,21 +13,37 @@ export const ModernTemplate = ({ resumeData }) => {
     <div className="p-8 lg:p-12 flex justify-center">
 
       {/* Resume Sheet */}
-      <div className="w-full max-w-3xl bg-white text-black rounded-2xl shadow-2xl overflow-hidden">
+      <div 
+        className="w-full bg-white text-black overflow-hidden mx-auto"
+        style={{
+          width:"210mm",
+          minHeight:"297mm",
+        }}
+        >
 
-        <div className="p-10">
+        <div className="p-12">
 
           <PreviewHeader resumeData={resumeData} />
 
-          <PreviewSummary resumeData={resumeData} />
+          {resumeData.professional_summary?.trim() && (
+            <PreviewSummary resumeData={resumeData} />
+          )}
 
-          <PreviewEducation resumeData={resumeData} />
+          {resumeData.education.length >0 && (
+            <PreviewEducation resumeData={resumeData} />
+          )}
 
-          <PreviewSkills resumeData={resumeData} />
+          {resumeData.skills.length >0 &&(
+            <PreviewSkills resumeData={resumeData} />
+          )}
 
+          {resumeData.skills.length >0 &&(
           <PreviewExperience resumeData={resumeData} />
+          )}
 
+          {resumeData.skills.length >0 &&(
           <PreviewProjects resumeData={resumeData} />
+          )}
 
         </div>
 

@@ -1,13 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ResumeForm from '../components/resume/ResumeForm'
 import ResumePreview from '../components/resume/ResumePreview'
 import { useParams } from 'react-router-dom'
 import { emptyResumeData } from '../assets/assets'
 import api from '../api/axios'
+import {useReactToPrint} from "react-to-print"
 
 const ResumeBuilder = () => {
   const {resumeId}=useParams()
   const [resumeData, setResumeData] = useState(null)
+
+  const resumeRef=useRef(null);
+
+  const handlePrint=useReactToPrint({
+    contentRef:resumeRef,
+    documentTitle:`${resumeData?.personal_info?.full_name ||"Resume"}-Resume`,
+  });
 
   const loadResume=async ()=>{
     try {
@@ -58,6 +66,17 @@ const ResumeBuilder = () => {
 
     <div className="min-h-screen bg-slate-950 text-white">
 
+      <div className="flex justify-end items-center px-8 py-4 border-b border-white/10">
+
+        {/* download button */}
+        <button
+          onClick={handlePrint}
+          className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 transition font-medium"
+        >
+          Download PDF
+        </button>
+
+      </div>
       <div className="grid lg:grid-cols-2">
 
         {/* LEFT SIDE */}
@@ -74,10 +93,12 @@ const ResumeBuilder = () => {
         <div className="bg-slate-900/40 min-h-screen overflow-y-auto">
 
           <ResumePreview
+            ref={resumeRef}
             resumeData={resumeData}
           />
 
         </div>
+
 
       </div>
 
