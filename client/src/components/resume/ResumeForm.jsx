@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast'
 import api from '../../api/axios'
 import PersonalInfo from './sections/PersonalInfo'
 import ProfessionalSummary from './sections/ProfessionalSummary'
@@ -17,7 +18,7 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
     const profession=resumeData.personal_info.profession.trim();
 
     if(!fullName || !email || !profession){
-      return alert("Please fill all required fields");
+      return toast.success("Please fill all required fields");
     }
     try {
       const token=localStorage.getItem("token")
@@ -52,7 +53,7 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
   }
 )
 
-        alert("Resume Updated Successfully")
+        toast.success("Resume Updated Successfully")
       }
 
       //new resume
@@ -82,12 +83,12 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
         _id:response.data.resume._id
       }))
 
-      alert("Resume Created Successfully")
+      toast.success("Resume Created Successfully")
       }
     } catch (error) {
       console.log(error)
 
-      alert("Failed to save resume")
+      toast.success("Failed to save resume")
     }
     navigate("/app")
   }

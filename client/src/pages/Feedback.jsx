@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import api from "../api/axios"
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast'
 
 function Feedback() {
     const [rating, setRating] = useState(0);
@@ -19,7 +20,7 @@ function Feedback() {
         });
 
         if(response.data) {
-          alert("Thank you for your feedback!");
+          toast.success("Thank you for your feedback!");
         }
 
         setRating(0);

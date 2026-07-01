@@ -1,4 +1,5 @@
 import React from 'react'
+import toast from 'react-hot-toast'
 import {useNavigate} from'react-router-dom'
 import api from "../api/axios"
 
@@ -42,7 +43,7 @@ const Login = () => {
                 formData
             );
 
-            alert(response.data.message);
+            toast.success(response.data.message);
 
             setFormData({
                 name: "",
@@ -76,7 +77,7 @@ const Login = () => {
                 JSON.stringify(user)
             );
 
-            alert(`Welcome ${user.name}`);
+            toast.success(`Welcome ${user.name}`);
 
             if(redirect==="feedback"){
                 navigate('/feedback')
@@ -87,7 +88,7 @@ const Login = () => {
 
     } catch (error) {
 
-        alert(
+        toast.error(
             error.response?.data?.message ||
             "Something went wrong"
         );

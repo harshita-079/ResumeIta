@@ -7,6 +7,7 @@ import {
   Plus,
   ArrowRight,
 } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 import { useNavigate } from 'react-router-dom'
 import api from "../api/axios"
@@ -62,10 +63,10 @@ const Dashboard = () => {
         prev.filter(resume => resume._id !== resumeId)
       );
 
-      alert("Resume deleted successfully.");
+      toast.success("Resume deleted successfully.");
     } catch (error) {
       console.error("Error deleting resume:", error);
-      alert("Failed to delete resume. Please try again.");
+      toast.error("Failed to delete resume. Please try again.");
     }
   };
 
