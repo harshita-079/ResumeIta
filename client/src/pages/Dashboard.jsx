@@ -8,7 +8,7 @@ import {
   ArrowRight,
 } from 'lucide-react'
 import toast from 'react-hot-toast'
-
+import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import api from "../api/axios"
 
@@ -47,10 +47,19 @@ const Dashboard = () => {
   };
 
   const handleDeleteResume = async (resumeId) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this resume? This action cannot be undone."
-    );
-    if (!confirmDelete) return;
+    const result = await Swal.fire({
+      title: "Delete Resume?",
+      text: "This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+      reverseButtons: true,
+      focusCancel: true,
+    });
+    if (!result.isConfirmed) return;
 
     try {
       const token=localStorage.getItem("token");
