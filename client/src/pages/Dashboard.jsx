@@ -123,7 +123,7 @@ const Dashboard = () => {
             <p className="text-slate-400 text-lg leading-8 max-w-2xl">
 
               Build smarter ATS-friendly resumes and track
-              your resume performance with ResumeIta.
+              your resume performance with <span className="bg-linear-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">ResumeIta</span>
 
             </p>
 
@@ -287,7 +287,9 @@ const Dashboard = () => {
 
             </div>
 
-            <button className="text-indigo-400 hover:text-indigo-300 transition flex items-center gap-2">
+            <button 
+            onClick={()=>navigate('/app/myresume')}
+            className="text-indigo-400 hover:text-indigo-300 transition flex items-center gap-2">
 
               View All
 
@@ -526,7 +528,9 @@ const Dashboard = () => {
             </button>
 
             {/* Action 2 */}
-            <button className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-green-500/30 transition-all duration-500">
+            <button 
+            onClick={()=>navigate('/app/ats')}
+            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-green-500/30 transition-all duration-500">
 
               <div className="absolute top-0 right-0 w-28 h-28 bg-green-500/10 blur-3xl rounded-full"></div>
 
@@ -555,7 +559,7 @@ const Dashboard = () => {
             </button>
 
             {/* Action 3 */}
-            <button className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-pink-500/30 transition-all duration-500">
+            <button className="hidden relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-pink-500/30 transition-all duration-500">
 
               <div className="absolute top-0 right-0 w-28 h-28 bg-pink-500/10 blur-3xl rounded-full"></div>
 

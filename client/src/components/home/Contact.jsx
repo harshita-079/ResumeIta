@@ -25,7 +25,7 @@ const Contact = () => {
           {/* Email */}
           <a
             href="mailto:resumeita@gmail.com"
-            className="p-6 rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
+            className="hidden p-6 rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
           >
             <Mail
               size={32}
@@ -43,7 +43,7 @@ const Contact = () => {
 
           {/* GitHub */}
           <a
-            href="https://github.com"
+            href="https://github.com/harshita-079/ResumeIta"
             target="_blank"
             rel="noreferrer"
             className="p-6 rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
@@ -64,7 +64,7 @@ const Contact = () => {
 
           {/* LinkedIn */}
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/harshita-gupta-12a29b292"
             target="_blank"
             rel="noreferrer"
             className="p-6 rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition"

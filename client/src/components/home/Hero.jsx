@@ -52,7 +52,9 @@ const Hero = () => {
               </button>
 
               {/* Secondary Button */}
-              <button onClick={()=>navigate('/login')} className="px-8 py-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-all duration-300 font-medium">
+              <button 
+              onClick={()=>navigate('/login?redirect=/app/ats')} 
+              className="px-8 py-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-all duration-300 font-medium">
 
                 Analyze Resume
 

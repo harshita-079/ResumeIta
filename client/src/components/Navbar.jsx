@@ -8,7 +8,7 @@ const Navbar = () => {
 
   const [open,setOpen]=useState(false)
 
-  const user={name:'harshita gupta'}
+  const user=JSON.parse(localStorage.getItem("currentUser")) || { name: "User" };
 
   const handleLogout=()=>{
     localStorage.removeItem("token");
@@ -51,7 +51,7 @@ const Navbar = () => {
           </NavLink>
 
           <NavLink
-            to="/app/resumes"
+            to="/app/myresume"
             className={({ isActive }) =>
               `transition ${
                 isActive
@@ -66,7 +66,7 @@ const Navbar = () => {
           </NavLink>
 
           <NavLink
-            to="/app/analyzer"
+            to="/app/ats"
             className={({ isActive }) =>
               `transition ${
                 isActive
@@ -86,7 +86,7 @@ const Navbar = () => {
         <div className="flex items-center gap-5">
 
           {/* Notification */}
-          <button className="relative p-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition">
+          <button className=" hidden relative p-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition">
 
             <Bell size={18} />
 
@@ -97,15 +97,15 @@ const Navbar = () => {
           {/* Avatar */}
           <div className="relative">
 
-  {/* Avatar Button */}
-  <button
-    onClick={() => setOpen(!open)}
-    className="w-10 h-10 rounded-full bg-linear-to-r from-indigo-500 to-purple-500 flex items-center justify-center font-semibold"
-  >
+            {/* Avatar Button */}
+            <button
+              onClick={() => setOpen(!open)}
+              className="w-10 h-10 rounded-full bg-linear-to-r from-indigo-500 to-purple-500 flex items-center justify-center font-semibold"
+            >
 
-    {user.name.charAt(0).toUpperCase()}
+              {user?.name?.split(" ").map(word=>word[0]).join("").toUpperCase()}
 
-  </button>
+            </button>
 
   {/* Dropdown */}
   {open && (
@@ -116,13 +116,17 @@ const Navbar = () => {
         Profile
       </Link>
 
-      <Link to="/app/setting" className="block px-5 py-3 text-left text-slate-300 hover:bg-white/5 transition">
+      <Link 
+      to="/app/setting" 
+      className="block px-5 py-3 text-left text-slate-300 hover:bg-white/5 transition">
 
         Settings
 
       </Link>
 
-      <button onClick={handleLogout} className="w-full px-5 py-3 text-left text-red-400 hover:bg-white/5 transition">
+      <button 
+      onClick={handleLogout} 
+      className="w-full px-5 py-3 text-left text-red-400 hover:bg-white/5 transition">
 
         Logout
 
