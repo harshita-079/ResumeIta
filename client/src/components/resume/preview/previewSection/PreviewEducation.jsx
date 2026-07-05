@@ -6,7 +6,7 @@ export const PreviewEducation = ({ resumeData }) => {
 
     <div className="mt-8">
 
-      <h2 className="text-2xl font-semibold mb-4 border-b pb-2">
+      <h2 className="text-2xl font-semibold mb-4 pb-2">
         Education
       </h2>
 

@@ -2,7 +2,7 @@ import { Mail, Phone, MapPin } from 'lucide-react'
 
 export const PreviewHeader = ({resumeData}) => {
   return (
-    <div className="border-b border-gray-200 pb-8 mb-8">
+    <div className="pb-8 mb-8">
         <h1 className="text-5xl font-bold mb-3">
             {resumeData.personal_info.full_name}
         </h1>

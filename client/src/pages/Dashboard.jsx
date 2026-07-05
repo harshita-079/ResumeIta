@@ -11,16 +11,27 @@ import toast from 'react-hot-toast'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import api from "../api/axios"
+import ATSModal from '../components/ats/ATSModal'
+import { analyzeATS } from '../utils/atsAnalyzer'
 
 const Dashboard = () => {
   const navigate=useNavigate()
 
   const [allResume, setAllResume] = useState([])
-
-  const  [currentUser,setCurrentUser]=useState(null);
+  const [currentUser,setCurrentUser]=useState(null);
+  const [analysisResults, setAnalysisResults] = useState(null);
+  const [showATSModal, setShowATSModal] = useState(false);
 
   const totalTemplates=new Set(allResume.map(r=>r.template)).size;
 
+  const handleAnalyzeResume=(resume) => {
+    const results = analyzeATS(resume.data);
+    console.log("ATS Analysis Results:", results);
+    setAnalysisResults(results);
+    console.log(analysisResults);
+    setShowATSModal(true);
+    console.log("Show ATS Modal:", showATSModal);
+  }
   const loadCurrentUser=()=>{
     const user=JSON.parse(localStorage.getItem("currentUser"))
 
@@ -438,6 +449,7 @@ const Dashboard = () => {
                        </button>
 
                       <button
+                        onClick={() => handleAnalyzeResume(resume)}
                         className="px-5 py-2 rounded-xl text-white transition"
                         style={{ backgroundColor: resume.accentColor }}
                       >
@@ -574,9 +586,14 @@ const Dashboard = () => {
           </div>
 
         </div>
-
+        
+      {showATSModal && (
+        <ATSModal 
+          result={analysisResults} 
+          onClose={() => setShowATSModal(false)} 
+        />
+      )}
       </div>
-
     </div>
   )
 }

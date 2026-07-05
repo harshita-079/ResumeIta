@@ -40,6 +40,7 @@ export const ProfessionalTemplate = ({ resumeData }) => {
           </div>
 
         </div>
+        
 
         {/* ================= Summary ================= */}
 

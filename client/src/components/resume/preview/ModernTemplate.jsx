@@ -25,23 +25,31 @@ export const ModernTemplate = ({ resumeData }) => {
 
           <PreviewHeader resumeData={resumeData} />
 
+          <hr className="my-8 border-gray-300" />
+
           {resumeData.professional_summary?.trim() && (
             <PreviewSummary resumeData={resumeData} />
           )}
+          <hr className="my-8 border-gray-300" />
+
 
           {resumeData.education.length >0 && (
             <PreviewEducation resumeData={resumeData} />
           )}
+          <hr className="my-8 border-gray-300" />
+
 
           {resumeData.skills.length >0 &&(
             <PreviewSkills resumeData={resumeData} />
           )}
+          <hr className="my-8 border-gray-300" />
 
-          {resumeData.skills.length >0 &&(
+          {resumeData.experience.length >0 &&(
           <PreviewExperience resumeData={resumeData} />
           )}
+          <hr className="my-8 border-gray-300" />
 
-          {resumeData.skills.length >0 &&(
+          {resumeData.projects.length >0 &&(
           <PreviewProjects resumeData={resumeData} />
           )}
 
