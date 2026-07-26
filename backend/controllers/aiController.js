@@ -1,18 +1,32 @@
-import { testGemini } from "../services/geminiService.js";
+import Resume from "../models/Resume.js";
+import { analyzeResumeAI } from "../services/geminiService.js";
 
-export const testAI = async (req, res) => {
+export const analyzeResume = async (req, res) => {
   try {
-    const result = await testGemini();
+    const { resumeId } = req.params;
 
-    res.status(200).json({
+    const resume = await Resume.findById(resumeId);
+
+    if (!resume) {
+      return res.status(404).json({
+        success: false,
+        message: "Resume not found.",
+      });
+    }
+
+    const analysis = await analyzeResumeAI(resume.data);
+
+    return res.status(200).json({
       success: true,
-      message: result,
+      analysis,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
+    console.error("Ai Controller Error:", error);
+
+    return res.status(500).json({
       success: false,
-      message: "Gemini connection failed",
+      message: "AI analysis failed.",
+      error: error.message,
     });
   }
 };

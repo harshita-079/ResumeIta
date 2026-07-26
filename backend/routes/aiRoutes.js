@@ -1,8 +1,9 @@
 import express from "express";
-import { testAI } from "../controllers/aiController.js";
+import { analyzeResume } from "../controllers/aiController.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/test", testAI);
+router.post("/analyze/:resumeId", authMiddleware, analyzeResume);
 
 export default router;

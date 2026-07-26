@@ -1,4 +1,4 @@
-const ATSModal = ({result,onClose}) => {
+const ManualReport = ({result,onClose}) => {
     if(!result) return null;
     const {score,checks,suggestions} = result;
     return (
@@ -120,4 +120,4 @@ const ATSModal = ({result,onClose}) => {
     );
 };
 
-export default ATSModal;
+export default ManualReport;

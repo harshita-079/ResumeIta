@@ -12,7 +12,7 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import {Toaster} from 'react-hot-toast'
 import Feedback from './pages/Feedback'
 import MyResume from './pages/MyResume'
-import ATSAnalyzer from './pages/ATSAnalyzer'
+import ATSModal from './pages/ATSModal'
 
 const App = () => {
   return (
@@ -31,7 +31,7 @@ const App = () => {
           <Route index element={<Dashboard />}/>
           <Route path='builder/:resumeId' element={<ResumeBuilder />}/>
           <Route path='myresume' element={<MyResume/>}/>
-          <Route path='ats' element={<ATSAnalyzer/>}/>
+          <Route path='ats' element={<ATSModal/>}/>
           <Route path='profile' element={<Profile/>}/>
           <Route path='setting' element={<Setting/>}/>
         </Route>

@@ -5,14 +5,13 @@ import {
   LayoutTemplate,
   Download,
   Plus,
-  ArrowRight,
+
 } from 'lucide-react'
-import toast from 'react-hot-toast'
-import Swal from 'sweetalert2'
+
 import { useNavigate } from 'react-router-dom'
 import api from "../api/axios"
-import ATSModal from '../components/ats/ATSModal'
-import { analyzeATS } from '../utils/atsAnalyzer'
+import ATSModal from '../components/ats/ManualReport'
+
 
 const Dashboard = () => {
   const navigate=useNavigate()
@@ -24,14 +23,7 @@ const Dashboard = () => {
 
   const totalTemplates=new Set(allResume.map(r=>r.template)).size;
 
-  const handleAnalyzeResume=(resume) => {
-    const results = analyzeATS(resume.data);
-    console.log("ATS Analysis Results:", results);
-    setAnalysisResults(results);
-    console.log(analysisResults);
-    setShowATSModal(true);
-    console.log("Show ATS Modal:", showATSModal);
-  }
+  
   const loadCurrentUser=()=>{
     const user=JSON.parse(localStorage.getItem("currentUser"))
 
@@ -57,38 +49,7 @@ const Dashboard = () => {
 
   };
 
-  const handleDeleteResume = async (resumeId) => {
-    const result = await Swal.fire({
-      title: "Delete Resume?",
-      text: "This action cannot be undone.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#dc2626",
-      cancelButtonColor: "#6b7280",
-      confirmButtonText: "Delete",
-      cancelButtonText: "Cancel",
-      reverseButtons: true,
-      focusCancel: true,
-    });
-    if (!result.isConfirmed) return;
 
-    try {
-      const token=localStorage.getItem("token");
-      await api.delete(`/resume/${resumeId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setAllResume(prev=>
-        prev.filter(resume => resume._id !== resumeId)
-      );
-
-      toast.success("Resume deleted successfully.");
-    } catch (error) {
-      console.error("Error deleting resume:", error);
-      toast.error("Failed to delete resume. Please try again.");
-    }
-  };
 
   useEffect(() => {
     loadResume()
@@ -264,216 +225,6 @@ const Dashboard = () => {
 
         </div>
 
-        {/* ================= MY RESUMES ================= */}
-
-        <div className="mb-16">
-
-          {/* Heading */}
-          <div className="flex items-center justify-between mb-8">
-
-            <div>
-
-              <h2 className="text-3xl font-bold mb-2">
-
-                My Resumes
-
-              </h2>
-
-              <p className="text-slate-400">
-
-                Manage and track all your resumes.
-
-              </p>
-
-            </div>
-
-            <button 
-            onClick={()=>navigate('/app/myresume')}
-            className="text-indigo-400 hover:text-indigo-300 transition flex items-center gap-2">
-
-              View All
-
-              <ArrowRight size={18} />
-
-            </button>
-
-          </div>
-
-          {/* Resume Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-
-            {allResume.map((resume) => (
-
-              <div
-                key={resume._id}
-                className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:-translate-y-2 hover:border-indigo-500/30 transition-all duration-500"
-              >
-
-                {/* Glow */}
-                <div
-                  className="absolute top-0 right-0 w-32 h-32 blur-3xl rounded-full opacity-20"
-                  style={{ backgroundColor: resume.accentColor }}
-                ></div>
-
-                <div className="relative z-10">
-
-                  {/* Top */}
-                  <div className="flex items-start justify-between mb-6">
-
-                    <div className="flex items-center gap-4">
-
-                      {/* Avatar */}
-                      <div
-                        className="w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold text-white"
-                        style={{ backgroundColor: resume.accentColor }}
-                      >
-
-                        {resume.data.personal_info.full_name?.charAt(0)?.toUpperCase() || resume.title.charAt(0).toUpperCase()}
-
-                      </div>
-
-                      <div>
-
-                        <h3 className="text-xl font-semibold">
-
-                          {resume.data?.personal_info?.full_name || resume.title}
-
-                        </h3>
-
-                        <p className="text-slate-400 text-sm mt-1">
-
-                          {resume.data?.personal_info?.profession || "Resume"}
-
-                        </p>
-
-                      </div>
-
-                    </div>
-
-                    {/* Template Badge */}
-                    <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300">
-
-                      {resume.template}
-
-                    </div>
-
-                  </div>
-
-                  {/* Summary */}
-                  <p className="text-slate-400 text-sm leading-6 line-clamp-2 mb-5">
-
-                    {resume.data?.professional_summary || "No summary available."}
-
-                  </p>
-
-                  {/* Experience */}
-                  <div className="mb-5">
-
-                    <h4 className="text-sm font-semibold text-white mb-2">
-
-                      Experience
-
-                    </h4>
-
-                  {resume.data?.experience?.length>0 ? (
-                    resume.data.experience.slice(0, 1).map((exp) => (
-
-                      <div
-                        key={exp._id}
-                        className="rounded-xl border border-white/10 bg-white/5 p-3"
-                      >
-
-                        <p className="text-sm font-medium text-white">
-
-                          {exp.position}
-
-                        </p>
-
-                        <p className="text-xs text-slate-400 mt-1">
-
-                          {exp.company}
-
-                        </p>
-
-                      </div>
-                    ))) : (
-                      <p className="text-xs text-slate-500">No experience added yet.</p>
-                    
-                    )}
-
-                  </div>
-
-                  {/* Skills */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-
-                    {resume.data?.skills?.length > 0 ? (
-                      resume.data.skills.slice(0, 4).map((skill, index) => (
-
-                      <span
-                        key={index}
-                        className="px-3 py-1 rounded-lg bg-white/10 text-xs text-slate-300"
-                      >
-
-                        {skill}
-
-                      </span>
-
-                    ))) : (
-                      <span className="text-xs text-slate-500">No skills added yet.</span>
-                    )}
-
-                  </div>
-
-                  {/* Bottom */}
-                  <div className="flex items-center justify-between">
-
-                    <p className="text-slate-500 text-sm">
-
-                      Updated {new Date(resume.updatedAt).toLocaleDateString("en-IN", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      })}
-
-                    </p>
-
-                    <div className="flex items-center gap-3">
-
-                      <button onClick={()=>navigate(`/app/builder/${resume._id}`)} className="px-5 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition">
-
-                        Edit
-
-                      </button>
-
-                      <button
-                        onClick={() => handleDeleteResume(resume._id)}className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 transition">
-                        Delete
-                       </button>
-
-                      <button
-                        onClick={() => handleAnalyzeResume(resume)}
-                        className="px-5 py-2 rounded-xl text-white transition"
-                        style={{ backgroundColor: resume.accentColor }}
-                      >
-
-                        Analyze
-
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            ))}
-
-          </div>
-
-        </div>
-
         {/* ================= QUICK ACTIONS ================= */}
 
         <div>
@@ -526,8 +277,29 @@ const Dashboard = () => {
               </div>
 
             </button>
-
             {/* Action 2 */}
+            <button
+              onClick={() => navigate("/app/myresume")}
+              className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-blue-500/30 transition-all duration-500"
+            >
+              <div className="absolute top-0 right-0 w-28 h-28 bg-blue-500/10 blur-3xl rounded-full"></div>
+
+              <div className="relative z-10">
+                <div className="w-14 h-14 rounded-2xl bg-linear-to-r from-blue-500 to-cyan-500 flex items-center justify-center mb-6">
+                  <FileText size={24} />
+                </div>
+
+                <h3 className="text-2xl font-semibold mb-3">
+                  My Resumes
+                </h3>
+
+                <p className="text-slate-400 leading-7">
+                  View, edit, download and manage all your resumes in one place.
+                </p>
+              </div>
+            </button>
+
+            {/* Action 3 */}
             <button 
             onClick={()=>navigate('/app/ats')}
             className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-green-500/30 transition-all duration-500">
@@ -558,7 +330,7 @@ const Dashboard = () => {
 
             </button>
 
-            {/* Action 3 */}
+            {/* Action 4 */}
             <button className="hidden relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-pink-500/30 transition-all duration-500">
 
               <div className="absolute top-0 right-0 w-28 h-28 bg-pink-500/10 blur-3xl rounded-full"></div>
