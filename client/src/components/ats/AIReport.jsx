@@ -211,7 +211,7 @@ const AIReport = ({ report, onClose }) => {
 
         {/* ================= SECTION ANALYSIS ================= */}
 
-        <div className="rounded-3xl border border-gray-200 p-8 mt-8">
+        <div className="rounded-3xl border text-black border-gray-200 p-8 mt-8">
 
         <h2 className="text-2xl font-bold mb-6">
             📊 Section Analysis
@@ -317,7 +317,7 @@ const AIReport = ({ report, onClose }) => {
 
         {/* ================= FINAL TIPS ================= */}
 
-        <div className="rounded-3xl border border-purple-200 bg-purple-50 p-8 mt-8">
+        <div className="rounded-3xl border border-purple-200 bg-purple-50 text-black p-8 mt-8">
 
         <h2 className="text-2xl font-bold mb-5">
 

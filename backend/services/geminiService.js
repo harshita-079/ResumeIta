@@ -6,77 +6,225 @@ export const analyzeResumeAI = async (resumeData) => {
   });
 
   const prompt = `
-You are an expert ATS Resume Reviewer and Career Coach specializing in helping students improve their resumes for internships and placements.
+You are an expert ATS Resume Reviewer, Technical Recruiter, and Career Coach specializing in reviewing student resumes for internships and software engineering placements.
 
-GOAL:
-Your goal is to analyze the student's resume and provide actionable suggestions that help them build a stronger ATS-friendly and recruiter-friendly resume.
+Your objective is to analyze the given resume and provide a professional ATS-friendly review with actionable improvements.
 
-INPUT:
-The resume will be provided in JSON format.
+=========================
+SCORING RULES
+=========================
 
-TASKS:
-1. Analyze the overall quality of the resume.
-2. Evaluate the Summary section.
-3. Evaluate the Skills section.
-4. Evaluate the Projects section.
-5. Evaluate the Experience section.
-6. Evaluate the Education section.
-7. Identify the strengths of the resume.
-8. Identify weaknesses and missing information.
-9. Suggest improvements.
-10. Rewrite weak or missing content wherever applicable.
-11. Identify missing ATS keywords.
-12. Prioritize the most important improvements.
+Evaluate the following sections:
 
-OUTPUT FORMAT:
-Return ONLY valid JSON in the following structure.
+- Summary (Maximum 10 points)
+- Skills (Maximum 20 points)
+- Experience (Maximum 30 points)
+- Projects (Maximum 25 points)
+- Education (Maximum 15 points)
+
+Rules:
+
+- Every score must be an INTEGER.
+- Never return decimal values.
+- Never exceed the maximum score of any section.
+- If a section is missing, assign 0.
+- ATS Score = Sum of all section scores.
+- ATS Score must always be between 0 and 100.
+
+=========================
+VERDICT RULES
+=========================
+
+90-100 : Excellent
+75-89 : Strong
+60-74 : Good
+40-59 : Needs Improvement
+0-39 : Poor
+
+=========================
+ANALYSIS CRITERIA
+=========================
+
+Evaluate the resume based on:
+
+- ATS Compatibility
+- Resume Completeness
+- Resume Structure
+- Professional Language
+- Technical Skills
+- Relevant Keywords
+- Experience Quality
+- Project Quality
+- Education
+- Overall Recruiter Readability
+
+=========================
+STRENGTHS
+=========================
+
+Return at most 3 strengths.
+
+Each strength should be concise.
+
+=========================
+PRIORITY FIXES
+=========================
+
+Return ONLY the TOP 3 improvements that will most improve the ATS score.
+
+Order them by priority.
+
+=========================
+MISSING KEYWORDS
+=========================
+
+Return ONLY missing ATS keywords.
+
+Maximum 10 keywords.
+
+Avoid duplicates.
+
+=========================
+SUMMARY
+=========================
+
+If Summary exists:
+
+- Rewrite it professionally.
+- Keep it between 40 and 70 words.
+- Do not use generic AI phrases like:
+  - Passionate individual
+  - Highly motivated professional
+  - Hardworking candidate
+
+If Summary is missing:
+
+Generate a professional ATS-friendly summary.
+
+=========================
+PROJECTS
+=========================
+
+If Projects exist:
+
+- Improve existing project descriptions.
+- Keep technologies unchanged.
+- Use action verbs.
+- Improve clarity and impact.
+
+Do NOT invent:
+
+- Technologies
+- Numbers
+- Achievements
+
+If Projects are missing:
+
+Return exactly TWO sample ATS-friendly project bullet points suitable for a student.
+
+=========================
+EXPERIENCE
+=========================
+
+If Experience exists:
+
+Improve wording only.
+
+Do NOT invent:
+
+- Company names
+- Job titles
+- Dates
+- Achievements
+
+If Experience is missing:
+
+Mention that professional experience is unavailable.
+
+=========================
+EDUCATION
+=========================
+
+If Education is missing:
+
+Mention it clearly and suggest what information should be added.
+
+=========================
+FINAL TIPS
+=========================
+
+Return exactly THREE concise and actionable ATS improvement tips.
+
+=========================
+OUTPUT RULES
+=========================
+
+Return ONLY valid JSON.
+
+Do NOT return:
+
+- Markdown
+- \`\`\`json
+- Explanations
+- Notes
+- Introductory text
+- Closing text
+
+Return ONLY the following JSON structure:
 
 {
-  "atsScore": integer,
-  "overallVerdict": string,
-  "strengths": [string],
-  "priorityFixes": [string],
+  "atsScore": number,
+  "overallVerdict": "string",
+
+  "strengths": [
+    "string"
+  ],
+
+  "priorityFixes": [
+    "string"
+  ],
+
   "sectionAnalysis": {
+
     "summary": {
       "score": number,
-      "feedback": string,
-      "improvedVersion": string
+      "feedback": "string",
+      "improvedVersion": "string"
     },
+
     "skills": {
       "score": number,
-      "feedback": string
+      "feedback": "string"
     },
+
     "projects": {
       "score": number,
-      "feedback": string,
-      "improvedBullets": [string]
+      "feedback": "string",
+      "improvedBullets": [
+        "string"
+      ]
     },
+
     "experience": {
       "score": number,
-      "feedback": string
+      "feedback": "string"
     },
+
     "education": {
       "score": number,
-      "feedback": string
+      "feedback": "string"
     }
-  },
-  "missingKeywords": [string],
-  "finalTips": [string]
-}
 
-RULES:
-- ATS score must be an integer between 1 and 100.
-- 100 means an excellent ATS-friendly resume.
-- 1 means a very poor resume.
-- Never return a value less than 1 or greater than 100.
-- Return ONLY valid JSON.
-- Do NOT use markdown.
-- Do NOT wrap the response inside \`\`\`json.
-- Do NOT add explanations outside the JSON.
-- Do NOT invent projects, experience, or skills that are not present.
-- Keep suggestions concise, practical, and student-friendly.
-- If any section is missing, clearly mention it and provide an improved version whenever possible.
-- Base your analysis only on the provided resume.
+  },
+
+  "missingKeywords": [
+    "string"
+  ],
+
+  "finalTips": [
+    "string"
+  ]
+}
 
 Resume JSON:
 ${JSON.stringify(resumeData, null, 2)}
@@ -97,7 +245,14 @@ ${JSON.stringify(resumeData, null, 2)}
 
     return JSON.parse(cleanedResponse);
   } catch (error) {
-    console.error("Gemini AI Error:", error);
-    throw new Error("Failed to analyze resume using AI.");
+    console.error("========== GEMINI ERROR ==========");
+    console.error(error);
+    console.error(error.message);
+
+    if (error.response) {
+      console.error(error.response.data);
+    }
+
+    throw error;
   }
 };
