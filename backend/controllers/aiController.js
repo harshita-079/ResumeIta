@@ -1,4 +1,4 @@
-import * as pdfParse from "pdf-parse";
+import pdfParse from "pdf-parse/lib/pdf-parse.js";
 import Resume from "../models/Resume.js";
 import { analyzeResumeAI } from "../services/geminiService.js";
 
@@ -41,7 +41,7 @@ export const analyzePdfResume = async (req, res) => {
       });
     }
 
-    const pdfData = await pdfParse.default(req.file.buffer);
+    const pdfData = await pdfParse(req.file.buffer);
     console.log("PDF Text Extracted:", pdfData.text); // Log the extracted text for debugging
     const analysis = await analyzeResumeAI(pdfData.text);
     console.log("AI Analysis Result:", analysis); // Log the analysis result for debugging
