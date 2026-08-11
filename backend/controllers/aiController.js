@@ -1,7 +1,4 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const pdfParse = require("pdf-parse");
-
+import * as pdfParse from "pdf-parse";
 import Resume from "../models/Resume.js";
 import { analyzeResumeAI } from "../services/geminiService.js";
 
@@ -44,7 +41,7 @@ export const analyzePdfResume = async (req, res) => {
       });
     }
 
-    const pdfData = await pdfParse(req.file.buffer);
+    const pdfData = await pdfParse.default(req.file.buffer);
     console.log("PDF Text Extracted:", pdfData.text); // Log the extracted text for debugging
 
     const analysis = await analyzeResumeAI(pdfData.text);
