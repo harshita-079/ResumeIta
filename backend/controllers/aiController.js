@@ -1,4 +1,7 @@
-import pdfParse from "pdf-parse/lib/pdf-parse.js";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const pdfParse = require("pdf-parse");
+
 import Resume from "../models/Resume.js";
 import { analyzeResumeAI } from "../services/geminiService.js";
 
@@ -43,6 +46,7 @@ export const analyzePdfResume = async (req, res) => {
 
     const pdfData = await pdfParse(req.file.buffer);
     console.log("PDF Text Extracted:", pdfData.text); // Log the extracted text for debugging
+
     const analysis = await analyzeResumeAI(pdfData.text);
     console.log("AI Analysis Result:", analysis); // Log the analysis result for debugging
 
@@ -51,11 +55,11 @@ export const analyzePdfResume = async (req, res) => {
       analysis,
     });
   } catch (error) {
-    console.error("AI Controller Error:", error);
+    console.error("PDF AI Controller Error:", error);
 
     return res.status(500).json({
       success: false,
-      message: "AI analysis failed.",
+      message: "Failed to analyze PDF resume.",
       error: error.message,
     });
   }
