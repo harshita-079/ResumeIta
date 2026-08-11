@@ -1,6 +1,9 @@
-import * as pdfParse from "pdf-parse";
+import { createRequire } from "module";
 import Resume from "../models/Resume.js";
 import { analyzeResumeAI } from "../services/geminiService.js";
+
+const require = createRequire(import.meta.url);
+const pdfParse = require("pdf-parse");
 
 export const analyzeResume = async (req, res) => {
   try {
@@ -40,8 +43,10 @@ export const analyzePdfResume = async (req, res) => {
         message: "No PDF file uploaded.",
       });
     }
+    console.log("Received PDF file:", req.file.originalname); // Log the received file for debugging
 
-    const pdfData = await pdfParse.default(req.file.buffer);
+    const pdfData = await pdfParse(req.file.buffer);
+    console.log("PDF TEXT LENGTH:", pdfData.text.length); // Log the length of the extracted text for debugging
     console.log("PDF Text Extracted:", pdfData.text); // Log the extracted text for debugging
 
     const analysis = await analyzeResumeAI(pdfData.text);

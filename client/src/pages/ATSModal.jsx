@@ -47,8 +47,10 @@ const handleAnalyze=async()=>{
       }
       //PDF RESUME
       else if(source==="pdf" && pdfFile){
+        console.log("button clicked");
         const response=await analyzePdfResumeAI(pdfFile);
         setAiReport(response.analysis);
+        console.log("AI Report:", response.analysis); // Log the AI report for debugging
       }
     }
   } catch(error){

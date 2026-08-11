@@ -9,12 +9,12 @@ import authMiddleware from "../middleware/authMiddleware.js";
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/analyze/:resumeId", authMiddleware, analyzeResume);
 router.post(
   "/analyze-pdf",
   authMiddleware,
   upload.single("resume"),
   analyzePdfResume,
 );
+router.post("/analyze/:resumeId", authMiddleware, analyzeResume);
 
 export default router;
