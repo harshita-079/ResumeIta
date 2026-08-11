@@ -1,5 +1,3 @@
-import React from "react";
-
 const ProfessionalSummary = ({ resumeData, setResumeData }) => {
 
   const handleChange = (e) => {
@@ -13,7 +11,7 @@ const ProfessionalSummary = ({ resumeData, setResumeData }) => {
 
   return (
 
-    <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
+    <div className="app-card rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-6">
 
       <h2 className="text-2xl font-semibold mb-6">
         Professional Summary
@@ -24,7 +22,7 @@ const ProfessionalSummary = ({ resumeData, setResumeData }) => {
         value={resumeData.professional_summary}
         onChange={handleChange}
         placeholder="Write a short professional summary..."
-        className="w-full rounded-2xl bg-slate-900 border border-white/10 p-4 outline-none resize-none focus:border-indigo-500 transition"
+        className="app-text-muted w-full rounded-2xl dark:bg-slate-900 border dark:border-white/10 p-4 outline-none resize-none focus:border-indigo-500 transition"
       />
 
     </div>

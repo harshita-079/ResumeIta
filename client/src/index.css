@@ -1,6 +1,45 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer components {
+  /* Full page */
+  .app-page {
+    @apply min-h-screen bg-gray-50 text-slate-900 transition-colors duration-300;
+  }
+
+  .dark .app-page {
+    @apply bg-slate-950 text-white;
+  }
+
+  /* Cards */
+  .app-card {
+    @apply bg-white text-slate-900 border border-slate-200 rounded-3xl transition-colors duration-300;
+  }
+
+  .dark .app-card {
+    @apply bg-slate-900 text-white border-white/10;
+  }
+
+  /* Inputs */
+  .app-input {
+    @apply w-full p-3 rounded-xl bg-white text-slate-900 border border-slate-300 outline-none transition-colors duration-300 focus:ring-2 focus:ring-indigo-500;
+  }
+
+  .dark .app-input {
+    @apply bg-slate-800 text-white border-white/10;
+  }
+
+  /* Secondary text */
+  .app-text-muted {
+    @apply text-slate-600 transition-colors duration-300;
+  }
+
+  .dark .app-text-muted {
+    @apply text-slate-400;
+  }
+}
 * {
   font-family: "Outfit", sans-serif;
 }

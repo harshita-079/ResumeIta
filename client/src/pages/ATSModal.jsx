@@ -47,10 +47,9 @@ const handleAnalyze=async()=>{
       }
       //PDF RESUME
       else if(source==="pdf" && pdfFile){
-        console.log("button clicked");
         const response=await analyzePdfResumeAI(pdfFile);
         setAiReport(response.analysis);
-        console.log("AI Report:", response.analysis); // Log the AI report for debugging
+        
       }
     }
   } catch(error){
@@ -62,9 +61,9 @@ const handleAnalyze=async()=>{
 };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="app-page min-h-screen dark:bg-slate-950 dark:text-white">
 
-      <div className="max-w-6xl mx-auto px-6 py-10">
+      <div className="app-card max-w-6xl mx-auto px-6 py-10">
 
         {/* Heading */}
 

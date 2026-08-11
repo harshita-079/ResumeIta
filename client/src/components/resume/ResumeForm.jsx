@@ -95,7 +95,7 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
 
   return (
 
-    <div className="p-8 lg:p-12">
+    <div className="app-page p-8 lg:p-12">
 
       {/* Heading */}
       <div className="mb-10">
@@ -115,7 +115,7 @@ const ResumeForm = ({ resumeData, setResumeData }) => {
       </div>
 
       {/* Form */}
-      <div className="space-y-8">
+      <div className=" space-y-8">
         <TemplateSelector
           resumeData={resumeData}
           setResumeData={setResumeData}

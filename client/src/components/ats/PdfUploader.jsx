@@ -25,7 +25,7 @@ const PdfUploader = ({ pdfFile, setPdfFile }) => {
 
       <label
         htmlFor="pdfUpload"
-        className="border-2 border-dashed border-white/20 rounded-3xl p-10 flex flex-col items-center justify-center cursor-pointer hover:border-indigo-500 transition"
+        className="app-text-muted border-2 border-dashed dark:border-white/20 rounded-3xl p-10 flex flex-col items-center justify-center cursor-pointer hover:border-indigo-500 transition"
       >
 
         <Upload size={40} className="mb-4 text-indigo-400" />

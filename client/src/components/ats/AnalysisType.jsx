@@ -14,11 +14,11 @@ const AnalysisType = ({ analysisType, setAnalysisType }) => {
 
         <div
           onClick={() => setAnalysisType("manual")}
-          className={`cursor-pointer rounded-3xl border p-8 transition-all duration-300
+          className={`app-text-muted cursor-pointer rounded-3xl border p-8 transition-all duration-300
           ${
             analysisType === "manual"
-              ? "border-indigo-500 bg-indigo-500/10"
-              : "border-white/10 bg-white/5 hover:border-indigo-400"
+              ? "border-indigo-500 dark:bg-indigo-500/10"
+              : "border-white/10 dark:bg-white/5 hover:border-indigo-400"
           }`}
         >
           <ScanSearch
@@ -39,11 +39,11 @@ const AnalysisType = ({ analysisType, setAnalysisType }) => {
 
         <div
           onClick={() => setAnalysisType("ai")}
-          className={`cursor-pointer rounded-3xl border p-8 transition-all duration-300
+          className={`app-text-muted cursor-pointer rounded-3xl border p-8 transition-all duration-300
           ${
             analysisType === "ai"
-              ? "border-purple-500 bg-purple-500/10"
-              : "border-white/10 bg-white/5 hover:border-purple-400"
+              ? "border-purple-500 dark:bg-purple-500/10"
+              : "border-white/10 dark:bg-white/5 hover:border-purple-400"
           }`}
         >
           <Sparkles

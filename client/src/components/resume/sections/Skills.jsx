@@ -33,7 +33,7 @@ const Skills = ({ resumeData, setResumeData }) => {
   };
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
+    <div className="app-card rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-6">
 
       <h2 className="text-2xl font-semibold mb-6">
         Skills
@@ -52,7 +52,7 @@ const Skills = ({ resumeData, setResumeData }) => {
               addSkill();
             }
           }}
-          className="flex-1 h-12 rounded-2xl bg-slate-900 border border-white/10 px-4 outline-none focus:border-indigo-500"
+          className="app-text-muted flex-1 h-12 rounded-2xl dark:bg-slate-900 border dark:border-white/10 px-4 outline-none focus:border-indigo-500"
         />
 
         <button

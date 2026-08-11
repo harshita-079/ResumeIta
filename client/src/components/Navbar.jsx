@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Bell } from 'lucide-react'
+import ThemeToggle from './ThemeToggle'
 
 
 const Navbar = () => {
@@ -17,7 +18,7 @@ const Navbar = () => {
   }
   return (
 
-    <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+    <nav className="app-card sticky top-0 z-50 border-b dark:border-white/10 dark:bg-slate-950/80 backdrop-blur-xl">
 
       <div className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between">
 
@@ -40,8 +41,8 @@ const Navbar = () => {
             className={({ isActive }) =>
               `transition ${
                 isActive
-                  ? 'text-white'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'dark:text-white'
+                  : 'dark:text-slate-400 hover:text-white'
               }`
             }
           >
@@ -55,8 +56,8 @@ const Navbar = () => {
             className={({ isActive }) =>
               `transition ${
                 isActive
-                  ? 'text-white'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'dark:text-white'
+                  : 'dark:text-slate-400 hover:text-white'
               }`
             }
           >
@@ -70,8 +71,8 @@ const Navbar = () => {
             className={({ isActive }) =>
               `transition ${
                 isActive
-                  ? 'text-white'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'dark:text-white'
+                  : 'dark:text-slate-400 hover:text-white'
               }`
             }
           >
@@ -80,13 +81,17 @@ const Navbar = () => {
 
           </NavLink>
 
+          <NavLink>
+            <ThemeToggle/>
+          </NavLink>
+
         </div>
 
         {/* Right Side */}
         <div className="flex items-center gap-5">
 
           {/* Notification */}
-          <button className=" hidden relative p-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition">
+          <button className=" hidden relative p-2 rounded-full dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 transition">
 
             <Bell size={18} />
 
@@ -110,15 +115,15 @@ const Navbar = () => {
   {/* Dropdown */}
   {open && (
 
-    <div className="absolute right-0 mt-3 w-52 rounded-2xl border border-white/10 bg-slate-900/95 backdrop-blur-xl shadow-2xl overflow-hidden">
+    <div className="app-card absolute right-0 mt-3 w-52 rounded-2xl border dark:border-white/10 dark:bg-slate-900/95 backdrop-blur-xl shadow-2xl overflow-hidden">
 
-      <Link to="/app/profile" className=" block px-5 py-3 text-left text-slate-300 hover:bg-white/5 transition">
+      <Link to="/app/profile" className=" block px-5 py-3 text-left dark:text-slate-300 dark:hover:bg-white/5 transition">
         Profile
       </Link>
 
       <Link 
       to="/app/setting" 
-      className="block px-5 py-3 text-left text-slate-300 hover:bg-white/5 transition">
+      className="block px-5 py-3 text-left dark:text-slate-300 dark:hover:bg-white/5 transition">
 
         Settings
 

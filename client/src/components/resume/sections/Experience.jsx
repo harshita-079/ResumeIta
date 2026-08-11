@@ -47,7 +47,7 @@ const Experience = ({ resumeData, setResumeData }) => {
 
   return (
 
-    <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
+    <div className="app-card rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-6">
 
       <div className="flex justify-between items-center mb-6">
 
@@ -78,7 +78,7 @@ const Experience = ({ resumeData, setResumeData }) => {
 
           <div
             key={index}
-            className="border border-white/10 rounded-2xl p-5 bg-slate-900"
+            className="app-card border dark:border-white/10 rounded-2xl p-5 dark:bg-slate-900"
           >
 
             <div className="flex justify-between items-center mb-5">
@@ -96,7 +96,7 @@ const Experience = ({ resumeData, setResumeData }) => {
 
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-5">
+            <div className=" grid sm:grid-cols-2 gap-5">
 
               {/* Company */}
 
@@ -111,7 +111,7 @@ const Experience = ({ resumeData, setResumeData }) => {
                   name="company"
                   value={exp.company}
                   onChange={(e) => handleChange(index, e)}
-                  className="w-full h-12 rounded-xl bg-slate-800 border border-white/10 px-4 outline-none focus:border-indigo-500"
+                  className="app-text-muted w-full h-12 rounded-xl dark:bg-slate-800 border dark:border-white/10 px-4 outline-none focus:border-indigo-500"
                 />
 
               </div>
@@ -129,7 +129,7 @@ const Experience = ({ resumeData, setResumeData }) => {
                   name="position"
                   value={exp.position}
                   onChange={(e) => handleChange(index, e)}
-                  className="w-full h-12 rounded-xl bg-slate-800 border border-white/10 px-4 outline-none focus:border-indigo-500"
+                  className="app-text-muted w-full h-12 rounded-xl dark:bg-slate-800 border dark:border-white/10 px-4 outline-none focus:border-indigo-500"
                 />
 
               </div>
@@ -148,7 +148,7 @@ const Experience = ({ resumeData, setResumeData }) => {
                   value={exp.startDate}
                   onChange={(e) => handleChange(index, e)}
                   placeholder="Jan 2024"
-                  className="w-full h-12 rounded-xl bg-slate-800 border border-white/10 px-4 outline-none focus:border-indigo-500"
+                  className="app-text-muted w-full h-12 rounded-xl dark:bg-slate-800 border dark:border-white/10 px-4 outline-none focus:border-indigo-500"
                 />
 
               </div>
@@ -167,7 +167,7 @@ const Experience = ({ resumeData, setResumeData }) => {
                   value={exp.endDate}
                   onChange={(e) => handleChange(index, e)}
                   placeholder="Present"
-                  className="w-full h-12 rounded-xl bg-slate-800 border border-white/10 px-4 outline-none focus:border-indigo-500"
+                  className="app-text-muted w-full h-12 rounded-xl dark:bg-slate-800 border dark:border-white/10 px-4 outline-none focus:border-indigo-500"
                 />
 
               </div>
@@ -188,7 +188,7 @@ const Experience = ({ resumeData, setResumeData }) => {
                 value={exp.description}
                 onChange={(e) => handleChange(index, e)}
                 placeholder="Describe your responsibilities..."
-                className="w-full rounded-xl bg-slate-800 border border-white/10 p-4 outline-none resize-none focus:border-indigo-500"
+                className="app-text-muted w-full rounded-xl dark:bg-slate-800 border dark:border-white/10 p-4 outline-none resize-none focus:border-indigo-500"
               />
 
             </div>

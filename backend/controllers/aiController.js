@@ -1,9 +1,6 @@
-import { createRequire } from "module";
+import * as pdfParse from "pdf-parse";
 import Resume from "../models/Resume.js";
 import { analyzeResumeAI } from "../services/geminiService.js";
-
-const require = createRequire(import.meta.url);
-const pdfParse = require("pdf-parse");
 
 export const analyzeResume = async (req, res) => {
   try {
@@ -43,14 +40,15 @@ export const analyzePdfResume = async (req, res) => {
         message: "No PDF file uploaded.",
       });
     }
-    console.log("Received PDF file:", req.file.originalname); // Log the received file for debugging
 
-    const pdfData = await pdfParse(req.file.buffer);
-    console.log("PDF TEXT LENGTH:", pdfData.text.length); // Log the length of the extracted text for debugging
-    console.log("PDF Text Extracted:", pdfData.text); // Log the extracted text for debugging
+    const parser = new pdfParse.PDFParse({
+      data: req.file.buffer,
+    });
+    const pdfData = await parser.getText();
 
-    const analysis = await analyzeResumeAI(pdfData.text);
-    console.log("AI Analysis Result:", analysis); // Log the analysis result for debugging
+    const analysis = await analyzeResumeAI({
+      rawResumeText: pdfData.text,
+    });
 
     return res.status(200).json({
       success: true,
@@ -66,3 +64,50 @@ export const analyzePdfResume = async (req, res) => {
     });
   }
 };
+
+// export const analyzePdfResume = async (req, res) => {
+//   try {
+//     if (!req.file) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "PDF file is required.",
+//       });
+//     }
+
+//     const loadingTask = pdfjsLib.getDocument({
+//       data: new Uint8Array(req.file.buffer),
+//     });
+
+//     const pdf = await loadingTask.promise;
+
+//     let text = "";
+
+//     for (let i = 1; i <= pdf.numPages; i++) {
+//       const page = await pdf.getPage(i);
+//       const content = await page.getTextContent();
+
+//       const pageText = content.items.map((item) => item.str).join(" ");
+
+//       text += pageText + "\n";
+//     }
+
+//     console.log("Extracted text length:", text.length);
+
+//     const analysis = await analyzeResumeAI({
+//       rawResumeText: text,
+//     });
+
+//     return res.status(200).json({
+//       success: true,
+//       analysis,
+//     });
+//   } catch (error) {
+//     console.error("PDF AI Controller Error:", error);
+
+//     return res.status(500).json({
+//       success: false,
+//       message: "Failed to analyze PDF resume.",
+//       error: error.message,
+//     });
+//   }
+// };

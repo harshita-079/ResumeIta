@@ -6,11 +6,11 @@ const SourceSelection = ({ source, setSource }) => {
 
       <div
         onClick={() => setSource("resumeita")}
-        className={`cursor-pointer rounded-3xl border p-8 transition-all duration-300
+        className={`app-text-muted cursor-pointer rounded-3xl border p-8 transition-all duration-300
         ${
           source === "resumeita"
-            ? "border-indigo-500 bg-indigo-500/10"
-            : "border-white/10 bg-white/5 hover:border-indigo-400"
+            ? "border-indigo-500 dark:bg-indigo-500/10"
+            : "border-white/10 dark:bg-white/5 hover:border-indigo-400"
         }`}
       >
         <h2 className="text-2xl font-semibold mb-3">
@@ -30,8 +30,8 @@ const SourceSelection = ({ source, setSource }) => {
         className={`cursor-pointer rounded-3xl border p-8 transition-all duration-300
         ${
           source === "pdf"
-            ? "border-indigo-500 bg-indigo-500/10"
-            : "border-white/10 bg-white/5 hover:border-indigo-400"
+            ? "border-indigo-500 dark:bg-indigo-500/10"
+            : "border-white/10 dark:bg-white/5 hover:border-indigo-400"
         }`}
       >
         <h2 className="text-2xl font-semibold mb-3">

@@ -17,7 +17,6 @@ export const analyzeResumeAI = async (resumeId) => {
 };
 
 export const analyzePdfResumeAI = async (file) => {
-  console.log("analyzePdfResumeAI called with file:", file); // Log the file for debugging
   const token = localStorage.getItem("token");
 
   const formData = new FormData();

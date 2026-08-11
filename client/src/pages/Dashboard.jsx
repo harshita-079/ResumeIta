@@ -58,7 +58,7 @@ const Dashboard = () => {
 
   return (
 
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="app-page min-h-screen dark:bg-slate-950 dark:text-white">
 
       <div className="max-w-7xl mx-auto px-6 py-10">
 
@@ -108,7 +108,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-16">
 
           {/* Card 1 */}
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
+          <div className="app-card relative overflow-hidden rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-6">
 
             <div className="absolute top-0 right-0 w-28 h-28 bg-indigo-500/10 blur-3xl rounded-full"></div>
 
@@ -137,7 +137,7 @@ const Dashboard = () => {
           </div>
 
           {/* Card 2 */}
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
+          <div className="app-card relative overflow-hidden rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-6">
 
             <div className="absolute top-0 right-0 w-28 h-28 bg-green-500/10 blur-3xl rounded-full"></div>
 
@@ -166,7 +166,7 @@ const Dashboard = () => {
           </div>
 
           {/* Card 3 */}
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
+          <div className="app-card relative overflow-hidden rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-6">
 
             <div className="absolute top-0 right-0 w-28 h-28 bg-pink-500/10 blur-3xl rounded-full"></div>
 
@@ -195,7 +195,7 @@ const Dashboard = () => {
           </div>
 
           {/* Card 4 */}
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
+          <div className="app-card relative overflow-hidden rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-6">
 
             <div className="absolute top-0 right-0 w-28 h-28 bg-orange-500/10 blur-3xl rounded-full"></div>
 
@@ -250,7 +250,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {/* Action 1 */}
-            <button onClick={()=>navigate('/app/builder/new')} className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-indigo-500/30 transition-all duration-500">
+            <button onClick={()=>navigate('/app/builder/new')} className="app-card relative overflow-hidden rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-indigo-500/30 transition-all duration-500">
 
               <div className="absolute top-0 right-0 w-28 h-28 bg-indigo-500/10 blur-3xl rounded-full"></div>
 
@@ -280,7 +280,7 @@ const Dashboard = () => {
             {/* Action 2 */}
             <button
               onClick={() => navigate("/app/myresume")}
-              className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-blue-500/30 transition-all duration-500"
+              className="app-card relative overflow-hidden rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-blue-500/30 transition-all duration-500"
             >
               <div className="absolute top-0 right-0 w-28 h-28 bg-blue-500/10 blur-3xl rounded-full"></div>
 
@@ -302,7 +302,7 @@ const Dashboard = () => {
             {/* Action 3 */}
             <button 
             onClick={()=>navigate('/app/ats')}
-            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-green-500/30 transition-all duration-500">
+            className="app-card relative overflow-hidden rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-green-500/30 transition-all duration-500">
 
               <div className="absolute top-0 right-0 w-28 h-28 bg-green-500/10 blur-3xl rounded-full"></div>
 
@@ -331,7 +331,7 @@ const Dashboard = () => {
             </button>
 
             {/* Action 4 */}
-            <button className="hidden relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-pink-500/30 transition-all duration-500">
+            <button className="hidden relative overflow-hidden rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-8 text-left hover:-translate-y-2 hover:border-pink-500/30 transition-all duration-500">
 
               <div className="absolute top-0 right-0 w-28 h-28 bg-pink-500/10 blur-3xl rounded-full"></div>
 

@@ -73,7 +73,7 @@ const MyResume = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="app-page min-h-screen dark:bg-slate-950 dark:text-white">
 
       <div className="max-w-7xl mx-auto px-6 py-10">
 
@@ -137,7 +137,7 @@ const MyResume = () => {
                       {allResume.map((resume) => (
               <div
                 key={resume._id}
-                className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:-translate-y-2 hover:border-indigo-500/30 transition-all duration-500"
+                className="app-card relative overflow-hidden rounded-3xl border dark:border-white/10 dark:bg-white/5 backdrop-blur-xl p-6 hover:-translate-y-2 hover:border-indigo-500/30 transition-all duration-500"
               >
                 {/* Glow */}
                 <div

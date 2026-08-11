@@ -37,7 +37,7 @@ const ResumeSelector = ({selectedResume,setSelectedResume,resumes,setResumes}) =
       <select
         value={selectedResume}
         onChange={(e) => setSelectedResume(e.target.value)}
-        className="w-full rounded-xl bg-slate-900 border border-white/10 p-4 outline-none"
+        className="app-text-muted w-full rounded-xl dark:bg-slate-900 border dark:border-white/10 p-4 outline-none"
       >
 
         <option 

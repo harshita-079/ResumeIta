@@ -20,7 +20,10 @@ const ResumePreview=forwardRef(({resumeData},ref)=>{
         
   }
   return(
-    <div ref={ref}>
+    <div
+     ref={ref}
+     className="w-[794px] h-[1123px] bg-white text-black mx-auto overflow-hidden shadow-none" 
+     >
       {template}
     </div>
   )
