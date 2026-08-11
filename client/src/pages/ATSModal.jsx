@@ -6,7 +6,7 @@ import AnalysisType from "../components/ats/AnalysisType";
 import LoadingAnalysis from "../components/ats/loadingAnalysis";
 import AIReport from "../components/ats/AIReport";
 import ManualReport from "../components/ats/ManualReport";
-import { analyzeResumeAI} from "../services/aiService";
+import { analyzeResumeAI, analyzePdfResumeAI} from "../services/aiService";
 import {analyzeATS} from "../utils/atsAnalyzer";
 
 const ATSModal = () => {
@@ -20,7 +20,7 @@ const [aiReport,setAiReport]=useState(null);
 const [resumes,setResumes]=useState([]);
 
 const handleAnalyze=async()=>{
-  if(!analysisType){
+  if (source === "resumeita" && !analysisType) {
     alert("Please select an analysis type.");
     return;
   }
@@ -31,14 +31,25 @@ const handleAnalyze=async()=>{
     // await new Promise((resolve) =>
     //         setTimeout(resolve, 3000)
     //     );
+
+    //MANUAL
     if(analysisType==="manual"){
       const resume = resumes.find((r) => r._id === selectedResume);
       const result=analyzeATS(resume.data);
       setManualResult(result);
     } 
+    //AI
     else{
-      const response=await analyzeResumeAI(selectedResume);
-      setAiReport(response.analysis);
+      //RESUMEITA RESUME
+      if(source==="resumeita"){
+        const response=await analyzeResumeAI(selectedResume);
+        setAiReport(response.analysis);
+      }
+      //PDF RESUME
+      else if(source==="pdf" && pdfFile){
+        const response=await analyzePdfResumeAI(pdfFile);
+        setAiReport(response.analysis);
+      }
     }
   } catch(error){
     console.error("Error during analysis:",error);
@@ -89,25 +100,45 @@ const handleAnalyze=async()=>{
             />
         )}
 
-        {((source==="resumeita" && selectedResume) || (source==="pdf" && pdfFile)) && (
-            <AnalysisType
-                analysisType={analysisType}
-                setAnalysisType={setAnalysisType}
-            />
+        {source === "resumeita" && selectedResume && (
+          <AnalysisType
+            analysisType={analysisType}
+            setAnalysisType={setAnalysisType}
+          />
         )}
 
-        {analysisType && (
+        {source === "pdf" && pdfFile && (
+          <div className="mt-8 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 p-5">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-lg font-semibold text-white">
+                  PDF resumes use AI-powered analysis
+                </p>
+                <p className="text-sm text-slate-300 mt-1">
+                  We'll extract the resume text from your PDF and run the Gemini AI reviewer automatically.
+                </p>
+              </div>
+
+              <button
+                onClick={handleAnalyze}
+                disabled={loading}
+                className="px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 transition font-medium text-white whitespace-nowrap"
+              >
+                {loading ? "Analyzing..." : "Analyze PDF with AI"}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {source === "resumeita" && analysisType && (
           <div className="mt-10 flex justify-center">
-
-          <button
-          onClick={handleAnalyze}
-          disabled={loading}
-          className="px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 transition disabled:opacity-50"
-          >
-
-          {loading ? "Analyzing..." : "Analyze Resume"}
-
-          </button>
+            <button
+              onClick={handleAnalyze}
+              disabled={loading}
+              className="px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 transition disabled:opacity-50"
+            >
+              {loading ? "Analyzing..." : "Analyze Resume"}
+            </button>
           </div>
         )}
 

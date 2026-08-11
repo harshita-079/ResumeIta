@@ -1,3 +1,4 @@
+import * as pdfParse from "pdf-parse";
 import Resume from "../models/Resume.js";
 import { analyzeResumeAI } from "../services/geminiService.js";
 
@@ -22,6 +23,35 @@ export const analyzeResume = async (req, res) => {
     });
   } catch (error) {
     console.error("Ai Controller Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "AI analysis failed.",
+      error: error.message,
+    });
+  }
+};
+
+export const analyzePdfResume = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "No PDF file uploaded.",
+      });
+    }
+
+    const pdfData = await pdfParse.default(req.file.buffer);
+    console.log("PDF Text Extracted:", pdfData.text); // Log the extracted text for debugging
+    const analysis = await analyzeResumeAI(pdfData.text);
+    console.log("AI Analysis Result:", analysis); // Log the analysis result for debugging
+
+    return res.status(200).json({
+      success: true,
+      analysis,
+    });
+  } catch (error) {
+    console.error("AI Controller Error:", error);
 
     return res.status(500).json({
       success: false,

@@ -15,3 +15,18 @@ export const analyzeResumeAI = async (resumeId) => {
 
   return response.data;
 };
+
+export const analyzePdfResumeAI = async (file) => {
+  const token = localStorage.getItem("token");
+
+  const formData = new FormData();
+  formData.append("resume", file);
+
+  const response = await api.post("/ai/analyze-pdf", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
