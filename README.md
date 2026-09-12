@@ -1,61 +1,83 @@
-# ResumeIta
+# 📄 ResumeIta — AI-Powered Resume Builder
 
-AI-powered Resume Builder and ATS Analyzer built using React, Tailwind CSS, and modern frontend technologies.
+**ResumeIta** is a full-stack AI-powered resume builder that helps users create, edit, preview, export, and analyze resumes for ATS compatibility.
 
-## Features
+## ✨ Features
 
-* AI Resume Builder
-* ATS Resume Analyzer
-* Modern Resume Templates
-* Live Resume Preview
-* Responsive UI
-* Dark SaaS Design
-* Resume Download Support
+* 🔐 User authentication & protected APIs
+* 📝 Dynamic resume editing
+* 👀 Real-time resume preview
+* 📄 PDF export
+* 🤖 AI-powered ATS analysis
+* 📊 ATS scoring
+* 💡 Resume improvement feedback
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-* React.js
-* Vite
-* Tailwind CSS
-* React Router DOM
-* Framer Motion
+**Frontend:** React.js
+**Backend:** Node.js, Express.js, REST APIs
+**Database:** MongoDB
+**AI:** Google Gemini API
+**Authentication:** JWT
+**Tools:** Git, GitHub, Postman
 
-## Project Status
+## 🏗️ How It Works
 
-Currently in development 🚧
-
-## Getting Started
-
-Clone the repository:
-
-```bash
-git clone YOUR_REPOSITORY_LINK
+```text id="f4a7q3"
+User
+  ↓
+Create / Edit Resume
+  ↓
+React Frontend
+  ↓
+Express REST APIs
+  ↓
+MongoDB
+  ↓
+Resume Data
+  ↓
+ATS Analyzer
+  ├── Rule-Based Checks
+  └── Google Gemini Analysis
+          ↓
+    ATS Score & Feedback
 ```
 
-Install dependencies:
+## 👩‍💻 My Contribution
 
-```bash
+I contributed to the development of ResumeIta, including:
+
+* Built dynamic resume editing and real-time preview
+* Developed backend APIs using Node.js and Express.js
+* Implemented authentication and protected APIs
+* Integrated Google Gemini API for AI-powered ATS analysis
+* Worked on PDF export functionality
+
+## 📸 Screenshots
+
+<img width="1902" height="966" alt="image" src="https://github.com/user-attachments/assets/9afae9f6-ccd0-4d35-a3dd-409fb2c429b8" />
+
+
+## ⚙️ Setup
+
+```bash id="3r7h6w"
+git clone <YOUR_REPOSITORY_URL>
+cd ResumeIta
 npm install
-```
-
-Run development server:
-
-```bash
 npm run dev
 ```
 
-## Folder Structure
+Create a `.env` file with the required environment variables:
 
-```txt
-src/
- ├── assets/
- ├── components/
- ├── layout/
- ├── pages/
- ├── App.jsx
- └── main.jsx
+```env id="k2h8w1"
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
-## Author
+> Never commit your `.env` file or API keys.
 
-Harshita Gupta
+## 🔗 Links
+
+**Live Demo:** <https://resumeita-two.vercel.app/>
+**GitHub:** <https://github.com/harshita-079/ResumeIta>
