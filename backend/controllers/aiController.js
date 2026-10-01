@@ -3,10 +3,14 @@ import Resume from "../models/Resume.js";
 import { analyzeResumeAI } from "../services/geminiService.js";
 
 export const analyzeResume = async (req, res) => {
+  const requestStart = Date.now();
+
   try {
     const { resumeId } = req.params;
 
-    const resume = await Resume.findById(resumeId);
+    const dbStart = Date.now();
+    const resume = await Resume.findById(resumeId).lean();
+    const dbTime = Date.now() - dbStart;
 
     if (!resume) {
       return res.status(404).json({
@@ -15,19 +19,27 @@ export const analyzeResume = async (req, res) => {
       });
     }
 
+    const aiStart = Date.now();
     const analysis = await analyzeResumeAI(resume.data);
+    const aiTime = Date.now() - aiStart;
+
+    console.log({
+      endpoint: "analyze-resume",
+      dbTime: `${dbTime}ms`,
+      aiTime: `${aiTime}ms`,
+      totalTime: `${Date.now() - requestStart}ms`,
+    });
 
     return res.status(200).json({
       success: true,
       analysis,
     });
   } catch (error) {
-    console.error("Ai Controller Error:", error);
+    console.error("AI Controller Error:", error);
 
     return res.status(500).json({
       success: false,
       message: "AI analysis failed.",
-      error: error.message,
     });
   }
 };

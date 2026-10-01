@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -12,28 +13,50 @@ dotenv.config();
 
 const app = express();
 
+// Middleware
+const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL ? process.env.CLIENT_URL.split(",") : "*",
+    origin: allowedOrigins,
     credentials: true,
   }),
 );
+
 app.use(express.json());
 
+// Health check
 app.get("/", (req, res) => {
-  res.send("ResumeIta API Running...");
+  res.status(200).json({
+    success: true,
+    message: "ResumeIta API Running...",
+  });
 });
 
-const PORT = process.env.PORT || 5000;
-
-connectDB();
-
+// API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/resume", resumeRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/ai", aiRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Start server only after DB connection
+const PORT = process.env.PORT || 5000;
+
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server startup failed:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();

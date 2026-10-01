@@ -1,257 +1,163 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import { GoogleGenAI } from "@google/genai";
 
-export const analyzeResumeAI = async (resumeData) => {
-  const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
-  });
+const apiKey = process.env.GEMINI_API_KEY;
 
-  const prompt = `
-You are an expert ATS Resume Reviewer, Technical Recruiter, and Career Coach specializing in reviewing student resumes for internships and software engineering placements.
-
-Your objective is to analyze the given resume and provide a professional ATS-friendly review with actionable improvements.
-
-=========================
-SCORING RULES
-=========================
-
-Evaluate the following sections:
-
-- Summary (Maximum 10 points)
-- Skills (Maximum 20 points)
-- Experience (Maximum 30 points)
-- Projects (Maximum 25 points)
-- Education (Maximum 15 points)
-
-Rules:
-
-- Every score must be an INTEGER.
-- Never return decimal values.
-- Never exceed the maximum score of any section.
-- If a section is missing, assign 0.
-- ATS Score = Sum of all section scores.
-- ATS Score must always be between 0 and 100.
-
-=========================
-VERDICT RULES
-=========================
-
-90-100 : Excellent
-75-89 : Strong
-60-74 : Good
-40-59 : Needs Improvement
-0-39 : Poor
-
-=========================
-ANALYSIS CRITERIA
-=========================
-
-Evaluate the resume based on:
-
-- ATS Compatibility
-- Resume Completeness
-- Resume Structure
-- Professional Language
-- Technical Skills
-- Relevant Keywords
-- Experience Quality
-- Project Quality
-- Education
-- Overall Recruiter Readability
-
-=========================
-STRENGTHS
-=========================
-
-Return at most 3 strengths.
-
-Each strength should be concise.
-
-=========================
-PRIORITY FIXES
-=========================
-
-Return ONLY the TOP 3 improvements that will most improve the ATS score.
-
-Order them by priority.
-
-=========================
-MISSING KEYWORDS
-=========================
-
-Return ONLY missing ATS keywords.
-
-Maximum 10 keywords.
-
-Avoid duplicates.
-
-=========================
-SUMMARY
-=========================
-
-If Summary exists:
-
-- Rewrite it professionally.
-- Keep it between 40 and 70 words.
-- Do not use generic AI phrases like:
-  - Passionate individual
-  - Highly motivated professional
-  - Hardworking candidate
-
-If Summary is missing:
-
-Generate a professional ATS-friendly summary.
-
-=========================
-PROJECTS
-=========================
-
-If Projects exist:
-
-- Improve existing project descriptions.
-- Keep technologies unchanged.
-- Use action verbs.
-- Improve clarity and impact.
-
-Do NOT invent:
-
-- Technologies
-- Numbers
-- Achievements
-
-If Projects are missing:
-
-Return exactly TWO sample ATS-friendly project bullet points suitable for a student.
-
-=========================
-EXPERIENCE
-=========================
-
-If Experience exists:
-
-Improve wording only.
-
-Do NOT invent:
-
-- Company names
-- Job titles
-- Dates
-- Achievements
-
-If Experience is missing:
-
-Mention that professional experience is unavailable.
-
-=========================
-EDUCATION
-=========================
-
-If Education is missing:
-
-Mention it clearly and suggest what information should be added.
-
-=========================
-FINAL TIPS
-=========================
-
-Return exactly THREE concise and actionable ATS improvement tips.
-
-=========================
-OUTPUT RULES
-=========================
-
-Return ONLY valid JSON.
-
-Do NOT return:
-
-- Markdown
-- \`\`\`json
-- Explanations
-- Notes
-- Introductory text
-- Closing text
-
-Return ONLY the following JSON structure:
-
-{
-  "atsScore": number,
-  "overallVerdict": "string",
-
-  "strengths": [
-    "string"
-  ],
-
-  "priorityFixes": [
-    "string"
-  ],
-
-  "sectionAnalysis": {
-
-    "summary": {
-      "score": number,
-      "feedback": "string",
-      "improvedVersion": "string"
-    },
-
-    "skills": {
-      "score": number,
-      "feedback": "string"
-    },
-
-    "projects": {
-      "score": number,
-      "feedback": "string",
-      "improvedBullets": [
-        "string"
-      ]
-    },
-
-    "experience": {
-      "score": number,
-      "feedback": "string"
-    },
-
-    "education": {
-      "score": number,
-      "feedback": "string"
-    }
-
-  },
-
-  "missingKeywords": [
-    "string"
-  ],
-
-  "finalTips": [
-    "string"
-  ]
+if (!apiKey) {
+  throw new Error("GEMINI_API_KEY is missing in backend .env");
 }
 
-Resume JSON:
-${JSON.stringify(resumeData, null, 2)}
+const ai = new GoogleGenAI({ apiKey });
+
+const model = "gemini-3.5-flash-lite";
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function generateWithRetry(request, maxRetries = 2) {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await ai.models.generateContent(request);
+    } catch (error) {
+      const status = error.status;
+      const isTemporaryError = [429, 500, 502, 503, 504].includes(status);
+
+      if (!isTemporaryError || attempt === maxRetries) {
+        throw error;
+      }
+
+      const delay = 1000 * 2 ** attempt;
+
+      console.log(
+        `Gemini temporary error (${status}). Retrying in ${delay}ms...`,
+      );
+
+      await sleep(delay);
+    }
+  }
+}
+
+const prompt = `
+You are an ATS resume reviewer for students and software engineering candidates.
+
+Analyze the supplied resume and return a concise, actionable ATS review.
+
+SCORING (integer scores only):
+- Summary: 0-10
+- Skills: 0-20
+- Experience: 0-30
+- Projects: 0-25
+- Education: 0-15
+- ATS score = sum of all section scores (0-100).
+- Missing sections receive 0.
+- Do not invent experience, technologies, metrics, or achievements.
+
+VERDICT:
+90-100 Excellent
+75-89 Strong
+60-74 Good
+40-59 Needs Improvement
+0-39 Poor
+
+OUTPUT REQUIREMENTS:
+- Maximum 3 concise strengths.
+- Exactly 3 prioritized fixes.
+- Maximum 10 relevant missing keywords.
+- Summary improvedVersion: 40-70 words.
+- Improve existing project bullets without changing technologies or inventing facts.
+- If projects are missing, return exactly 2 suitable sample bullets, clearly marked as examples.
+- If experience is missing, mention it.
+- If education is missing, explain what to add.
+- Return exactly 3 concise final tips.
+- Feedback should be concise and specific.
+- Return only valid JSON matching this structure:
+
+{
+  "atsScore": 0,
+  "overallVerdict": "",
+  "strengths": [],
+  "priorityFixes": [],
+  "sectionAnalysis": {
+    "summary": {
+      "score": 0,
+      "feedback": "",
+      "improvedVersion": ""
+    },
+    "skills": {
+      "score": 0,
+      "feedback": ""
+    },
+    "projects": {
+      "score": 0,
+      "feedback": "",
+      "improvedBullets": []
+    },
+    "experience": {
+      "score": 0,
+      "feedback": ""
+    },
+    "education": {
+      "score": 0,
+      "feedback": ""
+    }
+  },
+  "missingKeywords": [],
+  "finalTips": []
+}
+
+Ensure:
+- Every section score is an integer within its defined range.
+- atsScore exactly equals the sum of section scores.
+- overallVerdict matches the defined score range.
+- Return valid JSON without markdown fences.
 `;
 
+export const analyzeResumeAI = async (resumeData) => {
+  const startTime = Date.now();
+
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-flash-latest",
-      contents: prompt,
+    const resumeText =
+      typeof resumeData === "string"
+        ? resumeData
+        : resumeData?.rawResumeText || JSON.stringify(resumeData);
+
+    if (!resumeText || !resumeText.trim()) {
+      throw new Error("Resume content is empty");
+    }
+
+    const response = await generateWithRetry({
+      model,
+      contents: `${prompt}\n\nResume:\n${resumeText}`,
+      config: {
+        responseMimeType: "application/json",
+        temperature: 0.2,
+        maxOutputTokens: 2048,
+      },
     });
 
     const rawResponse = response.text;
 
+    if (!rawResponse) {
+      throw new Error("Gemini returned an empty response");
+    }
+
     const cleanedResponse = rawResponse
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
+      .replace(/^```json\s*/i, "")
+      .replace(/^```\s*/, "")
+      .replace(/\s*```$/, "")
       .trim();
 
-    return JSON.parse(cleanedResponse);
-  } catch (error) {
-    console.error("========== GEMINI ERROR ==========");
-    console.error(error);
-    console.error(error.message);
+    const analysis = JSON.parse(cleanedResponse);
 
-    if (error.response) {
-      console.error(error.response.data);
-    }
+    console.log(`Gemini analysis completed in ${Date.now() - startTime}ms`);
+
+    return analysis;
+  } catch (error) {
+    console.error(
+      `Gemini analysis failed after ${Date.now() - startTime}ms:`,
+      error.message,
+    );
 
     throw error;
   }

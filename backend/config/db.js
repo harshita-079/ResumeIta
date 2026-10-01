@@ -1,28 +1,20 @@
-import dns from "dns";
 import mongoose from "mongoose";
 
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
-
 const connectDB = async () => {
-
   try {
+    const mongoURI = process.env.MONGO_URI;
 
-    const conn = await mongoose.connect(
-      process.env.MONGO_URI
-    );
+    if (!mongoURI) {
+      throw new Error("MONGO_URI is not defined");
+    }
 
-    console.log(
-      `MongoDB Connected: ${conn.connection.host}`
-    );
+    const conn = await mongoose.connect(mongoURI);
 
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-
-    console.error(error.message);
-
+    console.error("MongoDB Connection Failed:", error.message);
     process.exit(1);
-
   }
-
 };
 
 export default connectDB;
